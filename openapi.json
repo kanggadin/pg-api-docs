@@ -2,25 +2,20 @@
   "openapi": "3.1.0",
   "info": {
     "title": "OTCBAY PG API - Public Documentation",
-    "description": "## 🚀 OTCBAY Payment Gateway API\n\n**Base URL:** `https://api.otcbay.com`\n\n### 🔐 Authentication\n- **Header:** `Authorization-Key`\n- **Value:** Your API key (contact support for access)\n\n### 📞 Support\n- **Email:** support@otcbay.com\n- **Documentation:** https://docs.otcbay.com\n- **Status Page:** https://status.otcbay.com\n\n### 🌟 Features\n- Real-time cryptocurrency payments\n- Multi-currency support\n- Secure wallet management\n- Transaction monitoring\n- QR code generation",
+    "description": "## 🚀 spcter-gloabl Payment Gateway API\n\n**Base URL:** `https://pg.api.spcter-global.click`\n\n### 🔐 Authentication\n- **Header:** `Authorization-Key`\n- **Value:** Your API key (contact support for access)\n\n### 📞 Support\n- **Email:** spcter.cs@gmail.com\n- \n\n### 🌟 Features\n- Real-time cryptocurrency payments\n- Multi-currency support\n- Secure wallet management\n- Transaction monitoring\n- QR code generation",
     "version": "1.0.0",
     "contact": {
-      "name": "OTCBAY Support",
-      "email": "support@otcbay.com",
-      "url": "https://otcbay.com/contact"
+      "name": "spcter-global Support",
+      "email": "spcter.cs@gmail.com",
+      "url": "https://spcter-global.com/contact"
     },
     "license": {
-      "name": "Commercial License",
-      "url": "https://otcbay.com/terms"
+      "name": "Commercial License"
     }
   },
   "servers": [
     {
-      "url": "https://api.otcbay.com/v1",
-      "description": "Production API Server"
-    },
-    {
-      "url": "https://sandbox-api.otcbay.com/v1", 
+      "url": "https://sandbox-api.spcter-global.click", 
       "description": "Sandbox API Server (for testing)"
     }
   ],
