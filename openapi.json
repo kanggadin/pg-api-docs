@@ -1,13 +1,12 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "OTCBAY PG API - Public Documentation",
+    "title": "SPCTER-GLOBAL PG API - Public Documentation",
     "description": "## 🚀 spcter-gloabl Payment Gateway API\n\n**Base URL:** `https://pg.api.spcter-global.click`\n\n### 🔐 Authentication\n- **Header:** `Authorization-Key`\n- **Value:** Your API key (contact support for access)\n\n### 📞 Support\n- **Email:** spcter.cs@gmail.com\n- \n\n### 🌟 Features\n- Real-time cryptocurrency payments\n- Multi-currency support\n- Secure wallet management\n- Transaction monitoring\n- QR code generation",
     "version": "1.0.0",
     "contact": {
       "name": "spcter-global Support",
-      "email": "spcter.cs@gmail.com",
-      "url": "https://spcter-global.com/contact"
+      "email": "spcter.cs@gmail.com"
     },
     "license": {
       "name": "Commercial License"
@@ -15,8 +14,8 @@
   },
   "servers": [
     {
-      "url": "https://sandbox-api.spcter-global.click", 
-      "description": "Sandbox API Server (for testing)"
+      "url": "https://pg.api.spcter-global.click", 
+      "description": "Demo API Server"
     }
   ],
   "tags": [
