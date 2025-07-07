@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "SPCTER-GLOBAL PG API - Public Documentation",
-    "description": "## 🚀 spcter-gloabl Payment Gateway API\n\n**Base URL:** `https://pg.api.spcter-global.click`\n\n### 🔐 Authentication\n- **Header:** `Authorization-Key`\n- **Value:** Your API key (contact support for access)\n\n### 📞 Support\n- **Email:** spcter.cs@gmail.com\n- \n\n### 🌟 Features\n- Real-time cryptocurrency payments\n- Multi-currency support\n- Secure wallet management\n- Transaction monitoring\n- QR code generation",
+    "description": "## 🚀 spcter-gloabl Payment Gateway API\n\n**Base URL:** `https://pg.api.spcter-global.click`\n\n### 🔐 Authentication\n- **Header:** `Authorization-Key`\n- **Value:** Your API key (contact support for access)\n\n### 📞 Support\n- **Email:** spcter.cs@gmail.com\n\n### 🌟 Features\n- Real-time cryptocurrency payments\n- Multi-currency support\n- Secure wallet management\n- Transaction monitoring\n- QR code generation",
     "version": "1.0.0",
     "contact": {
       "name": "spcter-global Support",
