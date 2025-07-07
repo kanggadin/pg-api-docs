@@ -1,1 +1,413 @@
-{"openapi":"3.1.0","info":{"title":"OTCBAY PG API","description":"## API Authorization\n - Name: Authorization-Key (Header)\nvalues: API key (for each Shop)","version":"0.1"},"paths":{"/auth/distributors/{level}":{"get":{"tags":["auth"],"summary":"Get Distributors By Level","description":"Get a list of distributors by level","operationId":"get_distributors_by_level_auth_distributors__level__get","security":[{"APIKeyHeader":[]}],"parameters":[{"name":"level","in":"path","required":true,"schema":{"type":"integer","title":"Level"}}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/DistributorListResponse"},"title":"Response Get Distributors By Level Auth Distributors  Level  Get"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/auth/create-api-key":{"post":{"tags":["auth"],"summary":"Create Api Key","operationId":"create_api_key_auth_create_api_key_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/APIKeyCreate"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/APIKeyResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}},"security":[{"APIKeyHeader":[]}]}},"/auth/verify":{"post":{"tags":["auth"],"summary":"Verify Api Key","operationId":"verify_api_key_auth_verify_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/APIKeyModel"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/qrcode/generate":{"post":{"tags":["shop"],"summary":"Create Shop Qr Code Endpoint","description":"ShopUser QR code Generate","operationId":"create_shop_qr_code_endpoint_qrcode_generate_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/QRCodeRequest"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/QRCodeResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}},"security":[{"APIKeyHeader":[]}]}},"/qrcode/info/{verification_token}":{"get":{"tags":["shop"],"summary":"Get Shop Info Endpoint","description":"QR code redirected then provide shop info","operationId":"get_shop_info_endpoint_qrcode_info__verification_token__get","parameters":[{"name":"verification_token","in":"path","required":true,"schema":{"type":"string","title":"Verification Token"}}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ShopInfoResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/qrcode/scan/{verification_token}/{type}":{"get":{"tags":["shop"],"summary":"Scan Qr Code","description":"QR code scanned then redirect to user friendly URL","operationId":"scan_qr_code_qrcode_scan__verification_token___type__get","parameters":[{"name":"verification_token","in":"path","required":true,"schema":{"type":"string","title":"Verification Token"}},{"name":"type","in":"path","required":true,"schema":{"type":"string","title":"Type"}}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/qrcode/check/{user_id}/{shop_id}":{"get":{"tags":["shop"],"summary":"Get Shop Qr Code","description":"User QR code Check","operationId":"get_shop_qr_code_qrcode_check__user_id___shop_id__get","security":[{"APIKeyHeader":[]}],"parameters":[{"name":"user_id","in":"path","required":true,"schema":{"type":"string","title":"User Id"}},{"name":"shop_id","in":"path","required":true,"schema":{"type":"string","title":"Shop Id"}}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/QRCodeResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/qrcode/image/{user_id}/{shop_id}/{type}":{"get":{"tags":["shop"],"summary":"Get Qr Code Image","description":"QR code image direct provide endpoint","operationId":"get_qr_code_image_qrcode_image__user_id___shop_id___type__get","parameters":[{"name":"user_id","in":"path","required":true,"schema":{"type":"string","title":"User Id"}},{"name":"shop_id","in":"path","required":true,"schema":{"type":"string","title":"Shop Id"}},{"name":"type","in":"path","required":true,"schema":{"type":"string","title":"Type"}}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/market/market_price":{"get":{"tags":["shop"],"summary":"Get market price data From Bithumb and Upbit, Naver Finance","description":"Get market price data From Bithumb and Upbit, Naver Finance (KRW)","operationId":"get_market_data_market_market_price_get","responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"type":"object","title":"Response Get Market Data Market Market Price Get"}}}}}}},"/market/exchange_rate/{currency}":{"get":{"tags":["shop"],"summary":"Get exchange rate data for a specific currency per 1 USD","description":"Get exchange rate data for a specific currency per 1 USD</br>\nReturns the value of foreign currency per 1 USD","operationId":"get_exchange_rate_data_market_exchange_rate__currency__get","parameters":[{"name":"currency","in":"path","required":true,"schema":{"anyOf":[{"type":"string"},{"type":"null"}],"description":"Optional currency code (KRW, JPY, EUR, CNY, KZT)","title":"Currency"},"description":"Optional currency code (KRW, JPY, EUR, CNY, KZT)"}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"type":"object","title":"Response Get Exchange Rate Data Market Exchange Rate  Currency  Get"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/wallet/payment_request":{"post":{"tags":["wallet"],"summary":"Create Payment Request","operationId":"create_payment_request_wallet_payment_request_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/PaymentRequestCreate"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PaymentRequestResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}},"security":[{"APIKeyHeader":[]},{"APIKeyHeader":[]}]}},"/wallet/verify":{"post":{"tags":["wallet"],"summary":"Verify Wallet Address","operationId":"verify_wallet_address_wallet_verify_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/WalletAddressVerifyRequest"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/WalletAddressResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}},"security":[{"APIKeyHeader":[]}]}},"/wallet/walletaddress/{shopcode}/{userid}":{"get":{"tags":["wallet"],"summary":"Get Wallet Addresses","operationId":"get_wallet_addresses_wallet_walletaddress__shopcode___userid__get","security":[{"APIKeyHeader":[]}],"parameters":[{"name":"userid","in":"path","required":true,"schema":{"type":"string","title":"Userid"}},{"name":"shopcode","in":"path","required":true,"schema":{"type":"string","title":"Shopcode"}}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/WalletAddressResponse"},"title":"Response Get Wallet Addresses Wallet Walletaddress  Shopcode   Userid  Get"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/wallet/hotwallet":{"post":{"tags":["wallet"],"summary":"Create Hot Wallet","description":"Create new hot wallet","operationId":"create_hot_wallet_wallet_hotwallet_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/HotWalletCreate"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HotWalletInDB"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}},"security":[{"APIKeyHeader":[]}]}},"/wallet/hotwallets":{"get":{"tags":["wallet"],"summary":"Get Hot Wallets","description":"Get all hot wallets","operationId":"get_hot_wallets_wallet_hotwallets_get","responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"items":{"$ref":"#/components/schemas/HotWalletInDB"},"type":"array","title":"Response Get Hot Wallets Wallet Hotwallets Get"}}}}},"security":[{"APIKeyHeader":[]}]}},"/wallet/hotwallet/{wallet_id}":{"get":{"tags":["wallet"],"summary":"Get Hot Wallet","description":"Get hot wallet by ID","operationId":"get_hot_wallet_wallet_hotwallet__wallet_id__get","security":[{"APIKeyHeader":[]}],"parameters":[{"name":"wallet_id","in":"path","required":true,"schema":{"type":"integer","title":"Wallet Id"}}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HotWalletInDB"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}},"put":{"tags":["wallet"],"summary":"Update Hot Wallet","description":"Update hot wallet","operationId":"update_hot_wallet_wallet_hotwallet__wallet_id__put","security":[{"APIKeyHeader":[]}],"parameters":[{"name":"wallet_id","in":"path","required":true,"schema":{"type":"integer","title":"Wallet Id"}}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/HotWalletUpdate"}}}},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HotWalletInDB"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/wallet/hotwallet/name/{wallet_name}":{"get":{"tags":["wallet"],"summary":"Get Hot Wallet By Name","description":"Get hot wallet by wallet name\n\nArgs:\n    wallet_name\n    \nReturns:\n    HotWalletInDB: HotWallet Data\n    \nRaises:\n    404: Hot wallet not found","operationId":"get_hot_wallet_by_name_wallet_hotwallet_name__wallet_name__get","security":[{"APIKeyHeader":[]}],"parameters":[{"name":"wallet_name","in":"path","required":true,"schema":{"type":"string","title":"Wallet Name"}}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HotWalletInDB"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/wallet/hotwallet/active/{distributor_id}":{"get":{"tags":["wallet"],"summary":"Get Active Hot Wallets","description":"Get all active hot wallets for a distributor","operationId":"get_active_hot_wallets_wallet_hotwallet_active__distributor_id__get","security":[{"APIKeyHeader":[]}],"parameters":[{"name":"distributor_id","in":"path","required":true,"schema":{"type":"string","title":"Distributor Id"}}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/HotWalletInDB"},"title":"Response Get Active Hot Wallets Wallet Hotwallet Active  Distributor Id  Get"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/balance/{shopid}":{"get":{"tags":["balance"],"summary":"Get Balance By Shopid","operationId":"get_balance_by_shopid_balance__shopid__get","security":[{"APIKeyHeader":[]}],"parameters":[{"name":"shopid","in":"path","required":true,"schema":{"type":"string","title":"Shopid"}}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BalanceDetailResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/balance/deposit":{"post":{"tags":["balance"],"summary":"Deposit Balance","operationId":"deposit_balance_balance_deposit_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/BalanceCreate"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BalanceDetailResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}},"security":[{"APIKeyHeader":[]}]}},"/balance/distributor/{distributorid}":{"get":{"tags":["balance"],"summary":"Get Balance Summary By Distributor","operationId":"get_balance_summary_by_distributor_balance_distributor__distributorid__get","security":[{"APIKeyHeader":[]}],"parameters":[{"name":"distributorid","in":"path","required":true,"schema":{"type":"string","title":"Distributorid"}}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BalanceSummaryResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/transaction/create":{"post":{"tags":["transaction"],"summary":"Create Transaction","operationId":"create_transaction_transaction_create_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/TransactionCreate"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TransactionResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}},"security":[{"APIKeyHeader":[]}]}},"/transaction/update":{"post":{"tags":["transaction"],"summary":"Update Transaction","operationId":"update_transaction_transaction_update_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/TransactionUpdate"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TransactionResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}},"security":[{"APIKeyHeader":[]}]}},"/transaction/updatestatus":{"post":{"tags":["transaction"],"summary":"Update Transaction Status","operationId":"update_transaction_status_transaction_updatestatus_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/TransactionUpdateStatus"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TransactionResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}},"security":[{"APIKeyHeader":[]}]}},"/transaction/by_userid/{userid}":{"get":{"tags":["transaction"],"summary":"Get Transactions By Userid","operationId":"get_transactions_by_userid_transaction_by_userid__userid__get","security":[{"APIKeyHeader":[]}],"parameters":[{"name":"userid","in":"path","required":true,"schema":{"type":"string","title":"Userid"}}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/TransactionResponse"},"title":"Response Get Transactions By Userid Transaction By Userid  Userid  Get"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/transaction/by_shopid/{shopid}":{"get":{"tags":["transaction"],"summary":"Get Transactions By Shopid","operationId":"get_transactions_by_shopid_transaction_by_shopid__shopid__get","security":[{"APIKeyHeader":[]}],"parameters":[{"name":"shopid","in":"path","required":true,"schema":{"type":"string","title":"Shopid"}},{"name":"from_date","in":"query","required":true,"schema":{"type":"string","description":"Start date for filtering transactions, yyyy-mm-dd","title":"From Date"},"description":"Start date for filtering transactions, yyyy-mm-dd"},{"name":"to_date","in":"query","required":true,"schema":{"type":"string","description":"End date for filtering transactions, yyyy-mm-dd","title":"To Date"},"description":"End date for filtering transactions, yyyy-mm-dd"},{"name":"limit","in":"query","required":false,"schema":{"type":"integer","description":"Number of transactions to return","default":10,"title":"Limit"},"description":"Number of transactions to return"},{"name":"offset","in":"query","required":false,"schema":{"type":"integer","description":"Offset for pagination","default":0,"title":"Offset"},"description":"Offset for pagination"}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/TransactionResponse"},"title":"Response Get Transactions By Shopid Transaction By Shopid  Shopid  Get"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/transaction/by_transactionid/{transactionid}":{"get":{"tags":["transaction"],"summary":"Get Transactions By Transactionid","operationId":"get_transactions_by_transactionid_transaction_by_transactionid__transactionid__get","security":[{"APIKeyHeader":[]}],"parameters":[{"name":"transactionid","in":"path","required":true,"schema":{"type":"string","title":"Transactionid"}}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TransactionResponsebyTransactionid"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/withdrawal/request":{"post":{"tags":["withdrawal"],"summary":"Create Withdrawal Request","description":"Request Withdrawal","operationId":"create_withdrawal_request_withdrawal_request_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/WithdrawalRequestCreate"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/WithdrawalRequestResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}},"security":[{"APIKeyHeader":[]}]}},"/withdrawal/cancel/{request_id}":{"post":{"tags":["withdrawal"],"summary":"Cancel Withdrawal","description":"Withdrawal Request Cancel","operationId":"cancel_withdrawal_withdrawal_cancel__request_id__post","security":[{"APIKeyHeader":[]}],"parameters":[{"name":"request_id","in":"path","required":true,"schema":{"type":"string","title":"Request Id"}}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/WithdrawalCancelRequest"}}}},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/WithdrawalRequestResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/withdrawal/approve/{request_id}":{"post":{"tags":["withdrawal"],"summary":"Approve Withdrawal","description":"Withdrawal Approve","operationId":"approve_withdrawal_withdrawal_approve__request_id__post","security":[{"APIKeyHeader":[]}],"parameters":[{"name":"request_id","in":"path","required":true,"schema":{"type":"string","title":"Request Id"}},{"name":"wallet_name","in":"query","required":true,"schema":{"type":"string","description":"Hot Wallet Name (DIRECT Withdrawal Only)","title":"Wallet Name"},"description":"Hot Wallet Name (DIRECT Withdrawal Only)"}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/WithdrawalRequestResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/withdrawal/reject/{request_id}":{"post":{"tags":["withdrawal"],"summary":"Reject Withdrawal","description":"Withdrawal Reject","operationId":"reject_withdrawal_withdrawal_reject__request_id__post","security":[{"APIKeyHeader":[]}],"parameters":[{"name":"request_id","in":"path","required":true,"schema":{"type":"string","title":"Request Id"}}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/WithdrawalRejectRequest"}}}},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/WithdrawalRequestResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/withdrawal/update":{"post":{"tags":["withdrawal"],"summary":"Update Withdrawal","description":"Withdrawal Request Update","operationId":"update_withdrawal_withdrawal_update_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/WithdrawalRequestUpdate"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/WithdrawalRequestResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}},"security":[{"APIKeyHeader":[]}]}},"/withdrawal/getlist":{"get":{"tags":["withdrawal"],"summary":"Get Withdrawals","description":"Withdrawal Request List Search","operationId":"get_withdrawals_withdrawal_getlist_get","security":[{"APIKeyHeader":[]}],"parameters":[{"name":"shopid","in":"query","required":true,"schema":{"type":"string","description":"Shop ID","title":"Shopid"},"description":"Shop ID"},{"name":"from_date","in":"query","required":true,"schema":{"type":"string","description":"Search Start Date, yyyy-mm-dd","title":"From Date"},"description":"Search Start Date, yyyy-mm-dd"},{"name":"to_date","in":"query","required":true,"schema":{"type":"string","description":"Search End Date, yyyy-mm-dd","title":"To Date"},"description":"Search End Date, yyyy-mm-dd"},{"name":"status","in":"query","required":false,"schema":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Status"}},{"name":"limit","in":"query","required":false,"schema":{"type":"integer","maximum":100,"minimum":1,"default":10,"title":"Limit"}},{"name":"offset","in":"query","required":false,"schema":{"type":"integer","minimum":0,"default":0,"title":"Offset"}}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/WithdrawalRequestResponse"},"title":"Response Get Withdrawals Withdrawal Getlist Get"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/withdrawal/getdetail/{request_id}":{"get":{"tags":["withdrawal"],"summary":"Get Withdrawal","description":"Withdrawal Request Detail Search","operationId":"get_withdrawal_withdrawal_getdetail__request_id__get","security":[{"APIKeyHeader":[]}],"parameters":[{"name":"request_id","in":"path","required":true,"schema":{"type":"string","title":"Request Id"}}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/WithdrawalRequestResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/withdrawal/statistics":{"get":{"tags":["withdrawal"],"summary":"Get Statistics","description":"Withdrawal Statistics","operationId":"get_statistics_withdrawal_statistics_get","security":[{"APIKeyHeader":[]}],"parameters":[{"name":"shopid","in":"query","required":true,"schema":{"type":"string","description":"Shop ID","title":"Shopid"},"description":"Shop ID"},{"name":"from_date","in":"query","required":true,"schema":{"type":"string","description":"Search Start Date, yyyy-mm-dd","title":"From Date"},"description":"Search Start Date, yyyy-mm-dd"},{"name":"to_date","in":"query","required":true,"schema":{"type":"string","description":"Search End Date, yyyy-mm-dd","title":"To Date"},"description":"Search End Date, yyyy-mm-dd"}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/WithdrawalStatisticsResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/withdrawal/updatebytransactionid/{transactionid}":{"get":{"tags":["withdrawal"],"summary":"Update Withdrawal By Transactionid","description":"트랜잭션 ID를 통해 출금 요청 상태 업데이트\n\n이 API는 다음과 같은 작업을 수행합니다:\n1. 트랜잭션 ID로 transactions 테이블에서 정보 조회\n2. 트랜잭션의 extstr01 필드에서 request_id 가져오기\n3. request_id를 사용하여 t_withdrawal_requests 테이블의 출금 요청 정보 조회\n4. 트랜잭션 상태를 'ready'로 업데이트\n\nParameters:\n- transactionid: 트랜잭션 ID\n\nReturns:\n- 업데이트된 출금 요청 정보","operationId":"update_withdrawal_by_transactionid_withdrawal_updatebytransactionid__transactionid__get","security":[{"APIKeyHeader":[]}],"parameters":[{"name":"transactionid","in":"path","required":true,"schema":{"type":"string","title":"Transactionid"}}],"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/WithdrawalRequestResponse"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/health":{"get":{"summary":"Health Check","operationId":"health_check_health_get","responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{}}}}}}}},"components":{"schemas":{"APIKeyCreate":{"properties":{"shopid":{"type":"string","maxLength":45,"title":"Shopid"},"shopcode":{"type":"string","maxLength":45,"title":"Shopcode"},"gubun":{"type":"string","maxLength":4,"title":"Gubun"}},"type":"object","required":["shopid","shopcode","gubun"],"title":"APIKeyCreate"},"APIKeyModel":{"properties":{"api_key":{"type":"string","title":"Api Key"}},"type":"object","required":["api_key"],"title":"APIKeyModel"},"APIKeyResponse":{"properties":{"shopid":{"type":"string","maxLength":45,"title":"Shopid"},"shopcode":{"type":"string","maxLength":45,"title":"Shopcode"},"gubun":{"type":"string","maxLength":4,"title":"Gubun"},"api_key":{"type":"string","title":"Api Key"}},"type":"object","required":["shopid","shopcode","gubun","api_key"],"title":"APIKeyResponse"},"BalanceCreate":{"properties":{"shopid":{"type":"string","title":"Shopid"},"depositqty":{"type":"number","title":"Depositqty"}},"type":"object","required":["shopid","depositqty"],"title":"BalanceCreate"},"BalanceDetailResponse":{"properties":{"seqno":{"type":"integer","title":"Seqno"},"shopid":{"type":"string","title":"Shopid"},"distributorid":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Distributorid"},"coin":{"type":"string","title":"Coin","default":"usdt"},"baseqty":{"type":"number","title":"Baseqty","default":0.0},"depositqty":{"type":"number","title":"Depositqty","default":0.0},"withdrawqty":{"type":"number","title":"Withdrawqty","default":0.0},"balance":{"type":"number","title":"Balance","default":0.0},"shop_name":{"type":"string","title":"Shop Name"}},"type":"object","required":["seqno","shopid","shop_name"],"title":"BalanceDetailResponse"},"BalanceSummaryResponse":{"properties":{"distributorid":{"type":"string","title":"Distributorid"},"total_baseqty":{"type":"number","title":"Total Baseqty"},"total_depositqty":{"type":"number","title":"Total Depositqty"},"total_balance":{"type":"number","title":"Total Balance"},"details":{"items":{"$ref":"#/components/schemas/BalanceDetailResponse"},"type":"array","title":"Details"}},"type":"object","required":["distributorid","total_baseqty","total_depositqty","total_balance","details"],"title":"BalanceSummaryResponse"},"DistributorListResponse":{"properties":{"sid":{"type":"integer","title":"Sid"},"uid":{"type":"string","title":"Uid"},"name":{"type":"string","title":"Name"},"level":{"type":"integer","title":"Level"},"parentsid":{"type":"integer","title":"Parentsid"},"coldwallet":{"type":"string","title":"Coldwallet"},"regdate":{"type":"string","format":"date-time","title":"Regdate"},"expdate":{"anyOf":[{"type":"string","format":"date-time"},{"type":"null"}],"title":"Expdate"},"status":{"type":"boolean","title":"Status"}},"type":"object","required":["sid","uid","name","level","parentsid","coldwallet","regdate","status"],"title":"DistributorListResponse"},"HTTPValidationError":{"properties":{"detail":{"items":{"$ref":"#/components/schemas/ValidationError"},"type":"array","title":"Detail"}},"type":"object","title":"HTTPValidationError"},"HotWalletCreate":{"properties":{"wallet_name":{"type":"string","title":"Wallet Name"},"wallet_address":{"type":"string","title":"Wallet Address"},"distributor_id":{"type":"string","title":"Distributor Id"},"is_active":{"type":"boolean","title":"Is Active","default":true},"wallet_key":{"type":"string","title":"Wallet Key"}},"type":"object","required":["wallet_name","wallet_address","distributor_id","wallet_key"],"title":"HotWalletCreate"},"HotWalletInDB":{"properties":{"wallet_name":{"type":"string","title":"Wallet Name"},"wallet_address":{"type":"string","title":"Wallet Address"},"distributor_id":{"type":"string","title":"Distributor Id"},"is_active":{"type":"boolean","title":"Is Active","default":true},"id":{"type":"integer","title":"Id"},"created_at":{"anyOf":[{"type":"string","format":"date-time"},{"type":"null"}],"title":"Created At"},"update_at":{"anyOf":[{"type":"string","format":"date-time"},{"type":"null"}],"title":"Update At"}},"type":"object","required":["wallet_name","wallet_address","distributor_id","id"],"title":"HotWalletInDB"},"HotWalletUpdate":{"properties":{"wallet_name":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Wallet Name"},"is_active":{"anyOf":[{"type":"boolean"},{"type":"null"}],"title":"Is Active"}},"type":"object","title":"HotWalletUpdate"},"PaymentRequestCreate":{"properties":{"crypto":{"type":"string","title":"Crypto"},"external_id":{"type":"string","title":"External Id"},"fiat":{"type":"string","title":"Fiat"},"amount":{"type":"number","title":"Amount"},"callback_url":{"type":"string","title":"Callback Url"},"userid":{"type":"string","maxLength":64,"title":"Userid"},"shopCode":{"type":"string","maxLength":14,"title":"Shopcode"},"distributor_sid":{"type":"integer","title":"Distributor Sid"}},"type":"object","required":["crypto","external_id","fiat","amount","callback_url","userid","shopCode","distributor_sid"],"title":"PaymentRequestCreate"},"PaymentRequestResponse":{"properties":{"id":{"anyOf":[{"type":"integer"},{"type":"null"}],"title":"Id"},"display_name":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Display Name"},"exchange_rate":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Exchange Rate"},"amount":{"anyOf":[{"type":"number"},{"type":"null"}],"title":"Amount"},"recalculate_after":{"anyOf":[{"type":"integer"},{"type":"null"}],"title":"Recalculate After"},"wallet":{"type":"string","title":"Wallet"},"qr_code_url":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Qr Code Url"},"wallet_address":{"$ref":"#/components/schemas/WalletAddressInDB"}},"type":"object","required":["wallet","wallet_address"],"title":"PaymentRequestResponse"},"QRCodeRequest":{"properties":{"shopid":{"type":"string","title":"Shopid"},"userid":{"type":"string","title":"Userid"}},"type":"object","required":["shopid","userid"],"title":"QRCodeRequest"},"QRCodeResponse":{"properties":{"qr_code_url_buy":{"type":"string","title":"Qr Code Url Buy"},"qr_code_url_sell":{"type":"string","title":"Qr Code Url Sell"},"verification_url":{"type":"string","title":"Verification Url"},"created_at":{"type":"string","format":"date-time","title":"Created At"},"shop_name":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Shop Name"},"shop_exchange":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Shop Exchange"},"user_permission":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"User Permission"}},"type":"object","required":["qr_code_url_buy","qr_code_url_sell","verification_url","created_at"],"title":"QRCodeResponse"},"ShopInfoResponse":{"properties":{"shop_id":{"type":"string","title":"Shop Id"},"shop_name":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Shop Name"},"fee":{"type":"number","title":"Fee","default":0},"in_fee":{"type":"number","title":"In Fee","default":0},"out_fee":{"type":"number","title":"Out Fee","default":0},"user_id":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"User Id"},"user_permission":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"User Permission"},"distributor_id":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Distributor Id"},"wallet_address":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Wallet Address"},"exchange":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Exchange"},"created_at":{"type":"string","format":"date-time","title":"Created At"}},"type":"object","required":["shop_id","created_at"],"title":"ShopInfoResponse"},"TransactionCreate":{"properties":{"userid":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Userid"},"shopid":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Shopid"},"transactionid":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Transactionid"},"status":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Status"},"qty":{"anyOf":[{"type":"number"},{"type":"null"}],"title":"Qty"},"venderSaleAmt":{"anyOf":[{"type":"number"},{"type":"null"}],"title":"Vendersaleamt","default":0.0},"currency":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Currency"},"address":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Address"},"type":{"type":"string","title":"Type"},"actor":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Actor","default":"user"},"extstr01":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Extstr01"}},"type":"object","required":["type"],"title":"TransactionCreate"},"TransactionResponse":{"properties":{"userid":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Userid"},"shopid":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Shopid"},"transactionid":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Transactionid"},"status":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Status"},"qty":{"anyOf":[{"type":"number"},{"type":"null"}],"title":"Qty"},"venderSaleAmt":{"anyOf":[{"type":"number"},{"type":"null"}],"title":"Vendersaleamt","default":0.0},"currency":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Currency"},"address":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Address"},"type":{"type":"string","title":"Type"},"actor":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Actor","default":"user"},"extstr01":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Extstr01"},"id":{"type":"integer","title":"Id"},"create_at":{"type":"string","format":"date-time","title":"Create At"},"update_at":{"type":"string","format":"date-time","title":"Update At"}},"type":"object","required":["type","id","create_at","update_at"],"title":"TransactionResponse"},"TransactionResponsebyTransactionid":{"properties":{"userid":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Userid"},"shopid":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Shopid"},"transactionid":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Transactionid"},"status":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Status"},"qty":{"anyOf":[{"type":"number"},{"type":"null"}],"title":"Qty"},"venderSaleAmt":{"anyOf":[{"type":"number"},{"type":"null"}],"title":"Vendersaleamt","default":0.0},"currency":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Currency"},"address":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Address"},"type":{"type":"string","title":"Type"},"actor":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Actor","default":"user"},"extstr01":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Extstr01"},"id":{"type":"integer","title":"Id"},"create_at":{"type":"string","format":"date-time","title":"Create At"},"update_at":{"type":"string","format":"date-time","title":"Update At"},"shop_name":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Shop Name"},"distributorid":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Distributorid"},"shop_telegramchatid":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Shop Telegramchatid"},"shop_telegramchannel":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Shop Telegramchannel"}},"type":"object","required":["type","id","create_at","update_at"],"title":"TransactionResponsebyTransactionid"},"TransactionUpdate":{"properties":{"id":{"type":"integer","title":"Id"},"type":{"type":"string","title":"Type"}},"type":"object","required":["id","type"],"title":"TransactionUpdate"},"TransactionUpdateStatus":{"properties":{"transactionid":{"type":"string","title":"Transactionid"},"status":{"type":"string","title":"Status"}},"type":"object","required":["transactionid","status"],"title":"TransactionUpdateStatus"},"ValidationError":{"properties":{"loc":{"items":{"anyOf":[{"type":"string"},{"type":"integer"}]},"type":"array","title":"Location"},"msg":{"type":"string","title":"Message"},"type":{"type":"string","title":"Error Type"}},"type":"object","required":["loc","msg","type"],"title":"ValidationError"},"WalletAddressInDB":{"properties":{"address":{"type":"string","title":"Address"},"wallet_key":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Wallet Key"},"currency":{"type":"string","title":"Currency"},"display_name":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Display Name"},"qr_code_path":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Qr Code Path"},"userid":{"type":"string","maxLength":64,"title":"Userid"},"shopCode":{"type":"string","maxLength":14,"title":"Shopcode"},"distributor_sid":{"type":"integer","title":"Distributor Sid"},"id":{"type":"integer","title":"Id"},"created_at":{"type":"string","format":"date-time","title":"Created At"}},"type":"object","required":["address","currency","userid","shopCode","distributor_sid","id","created_at"],"title":"WalletAddressInDB"},"WalletAddressResponse":{"properties":{"userid":{"type":"string","title":"Userid"},"shopcode":{"type":"string","title":"Shopcode"},"currency":{"type":"string","title":"Currency"},"display_name":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Display Name"},"distributor_sid":{"type":"integer","title":"Distributor Sid"},"address":{"type":"string","title":"Address"},"qr_code_path":{"type":"string","title":"Qr Code Path"}},"type":"object","required":["userid","shopcode","currency","distributor_sid","address","qr_code_path"],"title":"WalletAddressResponse"},"WalletAddressVerifyRequest":{"properties":{"address":{"type":"string","title":"Address"}},"type":"object","required":["address"],"title":"WalletAddressVerifyRequest"},"WithdrawalCancelRequest":{"properties":{"actor_id":{"type":"string","title":"Actor Id","description":"Cancel Request Actor ID"},"actor_type":{"type":"string","title":"Actor Type","description":"Cancel Request Actor Type (vender/sales/branch/distributor)"}},"type":"object","required":["actor_id","actor_type"],"title":"WithdrawalCancelRequest","description":"Withdrawal Cancel Request Schema"},"WithdrawalRejectRequest":{"properties":{"reason":{"type":"string","maxLength":255,"minLength":1,"title":"Reason","description":"Rejection reason"},"distributor_id":{"type":"string","title":"Distributor Id","description":"Distributor ID"}},"type":"object","required":["reason","distributor_id"],"title":"WithdrawalRejectRequest","description":"Schema for rejecting a withdrawal request"},"WithdrawalRequestCreate":{"properties":{"shopid":{"type":"string","title":"Shopid","description":"Shop ID"},"request_type":{"type":"string","title":"Request Type","description":"Request type (vender/sales/branch/distributor)"},"qty":{"anyOf":[{"type":"number","exclusiveMinimum":0.0},{"type":"string"}],"title":"Qty","description":"Withdrawal USDT Qty"},"wallet_address":{"type":"string","maxLength":256,"minLength":34,"title":"Wallet Address","description":"Recipient wallet address"},"transfer_type":{"type":"string","title":"Transfer Type","description":"Transfer type (direct/otc)"},"distributor_id":{"type":"string","title":"Distributor Id","description":"Distributor ID"}},"type":"object","required":["shopid","request_type","qty","wallet_address","transfer_type","distributor_id"],"title":"WithdrawalRequestCreate","description":"Schema for creating a withdrawal request"},"WithdrawalRequestResponse":{"properties":{"id":{"type":"integer","title":"Id"},"request_id":{"type":"string","title":"Request Id"},"request_type":{"type":"string","title":"Request Type"},"shopid":{"type":"string","title":"Shopid"},"qty":{"type":"string","title":"Qty"},"in_fee":{"type":"string","title":"In Fee"},"out_fee":{"type":"string","title":"Out Fee"},"send_qty":{"type":"string","title":"Send Qty"},"wallet_address":{"type":"string","title":"Wallet Address"},"transfer_type":{"type":"string","title":"Transfer Type"},"distributor_id":{"type":"string","title":"Distributor Id"},"status":{"type":"string","title":"Status"},"tx_hash":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Tx Hash"},"otc_link":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Otc Link"},"reason":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Reason"},"created_at":{"type":"string","format":"date-time","title":"Created At"},"updated_at":{"anyOf":[{"type":"string","format":"date-time"},{"type":"null"}],"title":"Updated At"}},"type":"object","required":["id","request_id","request_type","shopid","qty","in_fee","out_fee","send_qty","wallet_address","transfer_type","distributor_id","status","tx_hash","otc_link","reason","created_at","updated_at"],"title":"WithdrawalRequestResponse","description":"Schema for withdrawal request response"},"WithdrawalRequestUpdate":{"properties":{"request_id":{"type":"string","title":"Request Id","description":"Withdrawal Request ID"},"status":{"type":"string","title":"Status","description":"Withdrawal Request Update Status (rejected/failed/processing/cancelled)"},"actor_id":{"type":"string","title":"Actor Id","description":"Update Request Actor ID"},"actor_type":{"type":"string","title":"Actor Type","description":"Update Request Actor Type (vender/sales/branch/distributor)"},"reason":{"anyOf":[{"type":"string"},{"type":"null"}],"title":"Reason","description":"Withdrawal Request Update Reason"}},"type":"object","required":["request_id","status","actor_id","actor_type"],"title":"WithdrawalRequestUpdate","description":"Withdrawal Request Update Schema"},"WithdrawalStatisticsResponse":{"properties":{"total_count":{"type":"integer","title":"Total Count","description":"Total Withdrawal Request Count"},"total_request_qty":{"type":"string","title":"Total Request Qty","description":"Total Withdrawal USDT Qty"},"total_out_fee":{"type":"string","title":"Total Out Fee","description":"Total Withdrawal Fee"},"total_send_qty":{"type":"string","title":"Total Send Qty","description":"Total Withdrawal USDT Qty"}},"type":"object","required":["total_count","total_request_qty","total_out_fee","total_send_qty"],"title":"WithdrawalStatisticsResponse","description":"Withdrawal Statistics Response Schema"}},"securitySchemes":{"APIKeyHeader":{"type":"apiKey","in":"header","name":"Authorization-Key"}}}}
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "OTCBAY PG API - Public Documentation",
+    "description": "## 🚀 OTCBAY Payment Gateway API\n\n**Base URL:** `https://api.otcbay.com`\n\n### 🔐 Authentication\n- **Header:** `Authorization-Key`\n- **Value:** Your API key (contact support for access)\n\n### 📞 Support\n- **Email:** support@otcbay.com\n- **Documentation:** https://docs.otcbay.com\n- **Status Page:** https://status.otcbay.com\n\n### 🌟 Features\n- Real-time cryptocurrency payments\n- Multi-currency support\n- Secure wallet management\n- Transaction monitoring\n- QR code generation",
+    "version": "1.0.0",
+    "contact": {
+      "name": "OTCBAY Support",
+      "email": "support@otcbay.com",
+      "url": "https://otcbay.com/contact"
+    },
+    "license": {
+      "name": "Commercial License",
+      "url": "https://otcbay.com/terms"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.otcbay.com/v1",
+      "description": "Production API Server"
+    },
+    {
+      "url": "https://sandbox-api.otcbay.com/v1", 
+      "description": "Sandbox API Server (for testing)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "payment",
+      "description": "💳 Payment processing endpoints"
+    },
+    {
+      "name": "qrcode", 
+      "description": "📱 QR code generation and management"
+    },
+    {
+      "name": "market",
+      "description": "📊 Market data and exchange rates"
+    },
+    {
+      "name": "transaction",
+      "description": "🔄 Transaction history and status"
+    }
+  ],
+  "paths": {
+    "/qrcode/generate": {
+      "post": {
+        "tags": ["qrcode"],
+        "summary": "Generate QR Code",
+        "description": "Generate a QR code for payment processing\n\n### Example Use Case\nCreate a QR code that customers can scan to initiate a payment.\n\n### Rate Limiting\n- 100 requests per minute per API key",
+        "operationId": "generate_qr_code",
+        "security": [{"APIKeyHeader": []}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["shopid", "userid"],
+                "properties": {
+                  "shopid": {
+                    "type": "string",
+                    "description": "Unique shop identifier",
+                    "example": "shop_123456"
+                  },
+                  "userid": {
+                    "type": "string", 
+                    "description": "Customer user identifier",
+                    "example": "user_789012"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "✅ QR code generated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "qr_code_url_buy": {
+                      "type": "string",
+                      "description": "QR code URL for buy transactions",
+                      "example": "https://api.otcbay.com/qr/buy/abc123"
+                    },
+                    "qr_code_url_sell": {
+                      "type": "string",
+                      "description": "QR code URL for sell transactions", 
+                      "example": "https://api.otcbay.com/qr/sell/abc123"
+                    },
+                    "verification_url": {
+                      "type": "string",
+                      "description": "URL for transaction verification",
+                      "example": "https://verify.otcbay.com/abc123"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "QR code creation timestamp"
+                    },
+                    "expires_at": {
+                      "type": "string", 
+                      "format": "date-time",
+                      "description": "QR code expiration time (24 hours from creation)"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "❌ Bad Request - Invalid parameters"
+          },
+          "401": {
+            "description": "🔒 Unauthorized - Invalid API key"
+          },
+          "429": {
+            "description": "⏰ Rate limit exceeded"
+          }
+        }
+      }
+    },
+    "/qrcode/info/{verification_token}": {
+      "get": {
+        "tags": ["qrcode"],
+        "summary": "Get QR Code Information", 
+        "description": "Retrieve information about a QR code using its verification token\n\n### Public Endpoint\nThis endpoint does not require authentication and can be called by anyone with a valid verification token.",
+        "operationId": "get_qr_info",
+        "parameters": [
+          {
+            "name": "verification_token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "vt_abc123def456"
+            },
+            "description": "Verification token from QR code generation"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "✅ QR code information retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "shop_id": {"type": "string"},
+                    "shop_name": {"type": "string"},
+                    "fee": {"type": "number", "description": "Transaction fee percentage"},
+                    "status": {"type": "string", "enum": ["active", "expired", "used"]}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/market/market_price": {
+      "get": {
+        "tags": ["market"],
+        "summary": "Get Market Prices",
+        "description": "Get real-time cryptocurrency market prices from major exchanges\n\n### Data Sources\n- Bithumb (KRW pairs)\n- Upbit (KRW pairs) \n- Naver Finance (forex rates)\n\n### Update Frequency\nPrices are updated every 30 seconds\n\n### Public Endpoint\nNo authentication required",
+        "operationId": "get_market_prices",
+        "responses": {
+          "200": {
+            "description": "✅ Market prices retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Price update timestamp"
+                    },
+                    "prices": {
+                      "type": "object", 
+                      "properties": {
+                        "BTC": {
+                          "type": "object",
+                          "properties": {
+                            "KRW": {"type": "number", "example": 42000000},
+                            "USD": {"type": "number", "example": 32000}
+                          }
+                        },
+                        "ETH": {
+                          "type": "object",
+                          "properties": {
+                            "KRW": {"type": "number", "example": 2800000},
+                            "USD": {"type": "number", "example": 2100}
+                          }
+                        },
+                        "USDT": {
+                          "type": "object", 
+                          "properties": {
+                            "KRW": {"type": "number", "example": 1320},
+                            "USD": {"type": "number", "example": 1.00}
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/market/exchange_rate/{currency}": {
+      "get": {
+        "tags": ["market"],
+        "summary": "Get Exchange Rate",
+        "description": "Get current exchange rate for specific currency against USD\n\n### Supported Currencies\n- KRW (Korean Won)\n- JPY (Japanese Yen)\n- EUR (Euro)\n- CNY (Chinese Yuan)\n- KZT (Kazakhstani Tenge)",
+        "operationId": "get_exchange_rate",
+        "parameters": [
+          {
+            "name": "currency",
+            "in": "path", 
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["KRW", "JPY", "EUR", "CNY", "KZT"],
+              "example": "KRW"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "✅ Exchange rate retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "currency": {"type": "string", "example": "KRW"},
+                    "rate": {"type": "number", "example": 1320.50},
+                    "timestamp": {"type": "string", "format": "date-time"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wallet/payment_request": {
+      "post": {
+        "tags": ["payment"],
+        "summary": "Create Payment Request",
+        "description": "Create a new payment request for cryptocurrency transactions\n\n### Process Flow\n1. Create payment request\n2. Customer receives wallet address and QR code\n3. Customer sends payment to provided address\n4. System confirms payment and notifies via callback\n\n### Callback Notifications\nWhen payment is received, we'll send a POST request to your callback_url with transaction details.",
+        "operationId": "create_payment_request",
+        "security": [{"APIKeyHeader": []}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["crypto", "external_id", "fiat", "amount", "callback_url"],
+                "properties": {
+                  "crypto": {
+                    "type": "string",
+                    "enum": ["BTC", "ETH", "USDT"],
+                    "description": "Cryptocurrency to receive"
+                  },
+                  "external_id": {
+                    "type": "string",
+                    "description": "Your internal transaction ID",
+                    "example": "order_12345"
+                  },
+                  "fiat": {
+                    "type": "string", 
+                    "enum": ["KRW", "USD", "EUR"],
+                    "description": "Fiat currency for amount"
+                  },
+                  "amount": {
+                    "type": "number",
+                    "description": "Payment amount in fiat currency",
+                    "example": 50000
+                  },
+                  "callback_url": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "URL to receive payment notifications",
+                    "example": "https://yoursite.com/webhook/payment"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "✅ Payment request created successfully"
+          }
+        }
+      }
+    },
+    "/transaction/by_shopid/{shopid}": {
+      "get": {
+        "tags": ["transaction"],
+        "summary": "Get Shop Transactions",
+        "description": "Retrieve transaction history for a specific shop\n\n### Pagination\nResults are paginated. Use `limit` and `offset` parameters to navigate through pages.\n\n### Date Filtering\nRequired date range helps optimize query performance.",
+        "operationId": "get_shop_transactions",
+        "security": [{"APIKeyHeader": []}],
+        "parameters": [
+          {
+            "name": "shopid",
+            "in": "path",
+            "required": true,
+            "schema": {"type": "string"},
+            "example": "shop_123456"
+          },
+          {
+            "name": "from_date",
+            "in": "query", 
+            "required": true,
+            "schema": {"type": "string", "format": "date"},
+            "example": "2025-01-01",
+            "description": "Start date (YYYY-MM-DD)"
+          },
+          {
+            "name": "to_date",
+            "in": "query",
+            "required": true, 
+            "schema": {"type": "string", "format": "date"},
+            "example": "2025-01-31",
+            "description": "End date (YYYY-MM-DD)"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {"type": "integer", "default": 10, "maximum": 100},
+            "description": "Number of transactions to return (max 100)"
+          },
+          {
+            "name": "offset", 
+            "in": "query",
+            "schema": {"type": "integer", "default": 0},
+            "description": "Number of transactions to skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "✅ Transactions retrieved successfully"
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "tags": ["system"],
+        "summary": "Health Check",
+        "description": "Check API system health and status\n\n### Public Endpoint\nNo authentication required. Use this to monitor API availability.",
+        "operationId": "health_check",
+        "responses": {
+          "200": {
+            "description": "✅ System is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {"type": "string", "example": "healthy"},
+                    "timestamp": {"type": "string", "format": "date-time"},
+                    "version": {"type": "string", "example": "1.0.0"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization-Key",
+        "description": "API key for authentication. Contact support to obtain your key."
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message"
+          },
+          "code": {
+            "type": "string", 
+            "description": "Error code"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}
