@@ -41,7 +41,7 @@
       "post": {
         "tags": ["qrcode"],
         "summary": "Generate QR Code",
-        "description": "Generate a QR code for payment processing\n\n### Example Use Case\nCreate a QR code that customers can scan to initiate a payment.\n\n### Rate Limiting\n- 100 requests per minute per API key",
+        "description": "Generate a QR code for payment processing\n\n### Example Use Case\nCreate a QR code that customers can scan to initiate a payment.",
         "operationId": "generate_qr_code",
         "security": [{"APIKeyHeader": []}],
         "requestBody": {
